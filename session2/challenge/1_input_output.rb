@@ -3,10 +3,17 @@
 
 # Write a program that reads in two integers typed on the keybaord
 # and outputs their sum, difference, and product
-# 
+#
 # Standard input will be like "9 2\n" and will expect you to print
 # "11\n7\n18\n" to standard output.
 
 def sum_difference_product
-  # your code goes here
+  numbers = gets
+  num = numbers.split.map { |n| n.to_i }
+puts num[0] + num[1]
+puts num[0] - num[1]
+puts num[0] * num[1]
+
 end
+
+sum_difference_product
