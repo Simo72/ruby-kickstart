@@ -22,7 +22,7 @@
 class BeerSong
   attr_accessor :beers
 
-  def initialize(beers)
+  def initialize(beers) # adds rule at initialize point so certain numbers not used
     beers = 0  if beers < 0
     beers = 99 if beers > 99
     self.beers = beers
@@ -53,11 +53,11 @@ class BeerSong
   # translates number to English
   def translate(n)
     if 0 <= n && n <= 19
-      %w(zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen)[n]
+      %w(zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen)[n]# the [] gives which index
     elsif n % 10 == 0
-      %w(zero ten twenty thirty forty fifty sixty seventy eighty ninety)[n/10]
+      %w(zero ten twenty thirty forty fifty sixty seventy eighty ninety)[n/10] # again shows index by dividing no. by 10
     else
-      "#{translate n/10*10}-#{translate n%10}".downcase
+      "#{translate n/10*10}-#{translate n%10}".downcase # uses the fact an interger to give 10's
     end.capitalize
   end
 end
