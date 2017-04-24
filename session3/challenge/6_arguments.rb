@@ -17,3 +17,34 @@
 # match_maker true,  true,  true, true, nil     # => [false, true]
 # match_maker true,  true,  true, 0, nil        # => [false, true]
 
+def match_maker (key, *args)
+  answer = []
+  working = args.each_cons(2).to_a
+  if key == true
+    args[0] == args[1] ? false : true
+  else
+    args[0] == args[1] ? true : false
+    working
+end
+end
+
+# define method
+# new array
+# if/else depending on true or false
+# depending on matching value give true/false answer
+# return array
+
+def match_maker(opposites_attract, *elements)
+  to_return = []
+  elements.each_slice 2 do |first, last|
+    first  = !!first
+    last   = !!last
+    result = if opposites_attract
+               first != last
+             else
+               first == last
+             end
+    to_return << result
+  end
+  to_return
+end
