@@ -30,5 +30,33 @@
 # end
 
 
-def array_init
+def array_init(n=5, &block)
+  result = [0..n]
+
+  result.each_with_index do |index, value|
+    value.to_i * index.to_i
+  end
+
+  result
+
+
 end
+
+# method with initial array
+# one parameter which has a 5 default
+# one parameter which is block
+  # block across each array items
+# if no block 100 * the index
+
+p array_init(2) { |i| i.to_s }    # => ['0', '1']
+p array_init { |i| i.to_s }       # => ['0', '1', '2', '3', '4']
+p array_init 2                    # => ['0', '100']
+p array_init                      # => ['0', '100', '200', '300', '400']
+p array_init { 'hi' }              # => ['hi', 'hi', 'hi', 'hi', 'hi']
+p array_init 10 do |i|            # => [0, -5, 400, -15, 800, -25, 1200, -35, 1600, -45]
+  if i % 2 == 0
+     i * 200
+   else
+     i * -5
+   end
+ end
