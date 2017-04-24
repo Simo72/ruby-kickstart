@@ -29,5 +29,42 @@
 # create it from scratch :)
 
 
-def pathify
+def pathify(path=Hash.new)
+
+if path.is_a? Array
+  path_list = path.map { |p| '/' + p}
+
+else
+  answer = []
+  path.each do |top, bottom|
+   first_path = '/' + top
+  answer << first_path
+ end
+end
+answer << path_list
+
+end
+
+p pathify 'usr' => {'bin' => ['ruby'] }                                                        # => ['/usr/bin/ruby']
+p pathify 'usr' => {'bin' => ['ruby', 'perl'] }                                                # => ['/usr/bin/ruby', '/usr/bin/perl']
+p pathify 'usr' => {'bin' => ['ruby'], 'include' => ['zlib.h'] }                               # => ['/usr/bin/ruby', '/usr/include/zlib.h']
+p pathify 'usr' => {'bin' => ['ruby']}, 'opt' => {'local' => {'bin' => ['sqlite3', 'rsync']} } # => ['/usr/bin/ruby', 'opt/local/bin/sqlite3', 'opt/local/bin/rsync']
+p pathify                                                                                      # => []
+#
+
+
+def pathify(paths=Hash.new)
+  # base step
+  return paths.map { |path| '/' + path } if paths.is_a? Array
+
+  # recursive step
+  to_return = []
+  paths.each do |parent_path, child_dirs|
+    parent_path = '/' + parent_path         # paths begin with a /
+    child_paths = pathify child_dirs        # convert child directories to paths
+    child_paths.each do |child_path|        # join each child path to it's parent path
+      to_return << (parent_path + child_path)
+    end
+  end
+  to_return
 end
