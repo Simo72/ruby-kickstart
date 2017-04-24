@@ -29,4 +29,34 @@
 # shared [1,2,3], [3,2,1]            # => [{1=>[true, true], 2=>[true, true], 3=>[true, true]}, [1, 2, 3]]
 
 def shared(a, b)
+hash = Hash.new
+
+a.each do |i|
+
+  hash[i] ||= [nil, nil]
+  hash[i] [0] = true
+
 end
+
+b.each do |i|
+
+  hash[i] ||= [nil, nil]
+  hash[i] [1] = true
+end
+
+answer = hash.select { |key, value| value == [true, true]}.map {|key, value| key }
+# gives back duplicated items
+
+return hash, answer.sort # hash gives full detail and answer shows the above duplicates
+end
+
+
+# some very bad attempts at this one
+
+p shared [1,2,3], [1,2,4]            # => [{1=>[true, true], 2=>[true, true], 3=>[true, nil], 4=>[nil, true]}, [1, 2]]
+p shared %w(a b c d), %w(aa b cc d)  # => [{"a"=>[true, nil], "b"=>[true, true], "c"=>[true, nil], "d"=>[true, true], "aa"=>[nil, true], "cc"=>[nil, true]}, ["b", "d"]]
+p shared [], [1,2]                   # => [{1=>[nil, true], 2=>[nil, true]}, []]
+p shared [1,2], []                   # => [{1=>[true, nil], 2=>[true, nil]}, []]
+p shared [], []                      # => [{}, []]
+p shared [1,2,:c], ['a','b',:c]      # => [{1=>[true, nil], 2=>[true, nil], :c=>[true, true], "a"=>[nil, true], "b"=>[nil, true]}, [:c]]
+p shared [1,2,3], [3,2,1]            # => [{1=>[true, true], 2=>[true, true], 3=>[true, true]}, [1, 2, 3]]
