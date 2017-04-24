@@ -26,14 +26,40 @@
 
 
 class Person
-  attr_accessor :name
+  attr_accessor :name, :age, :quote
 
-  def initialize(&initializer)
-    @initializer = initializer
-    initializer.call self
+  def initialize(name, options=Hash.new, &initializer)
+    self.name = name
+    self.age = options[:age]
+    self.quote = options [:quote]
+    @initializer
+
   end
 
   def reinit
     @initializer.call self
+  end
+end
+
+# add age and quote to attr_accessor
+# add options/hash to initialize
+# split out name, age etc with initialize
+# ensure block has precedence
+ 
+
+
+class Person
+  attr_accessor :name, :age, :quote
+
+  def initialize(options=Hash.new, &initializer)
+    self.name    = options[:name]
+    self.age     = options[:age]
+    self.quote   = options[:quote]
+    @initializer = (initializer || Proc.new { |person| }) # this way, it always has a proc, and code like reinit doesn't have to worry that it might not be there
+    reinit
+  end
+
+  def reinit
+    @initializer.call(self)
   end
 end
